@@ -1,0 +1,43 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import ListItem from './ListItem';
+
+
+function List(props) {
+  const { currentId, history, items, onListItemPressed } = props;
+  if (!Array.isArray(items)) {
+    return null;
+  }
+
+  return (
+    <ul>
+      { items.map(
+          record => (
+            <li key={record.id}>
+              <ListItem
+                record={record}
+                currentId={currentId}
+                history={history}
+                onListItemPressed={onListItemPressed}
+              />
+            </li>
+          ),
+        )
+      }
+    </ul>
+  );
+}
+
+List.propTypes = {
+  currentId: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object),
+  history: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onListItemPressed: PropTypes.func.isRequired,
+};
+
+List.defaultProps = {
+  items: null,
+};
+
+export default List;
