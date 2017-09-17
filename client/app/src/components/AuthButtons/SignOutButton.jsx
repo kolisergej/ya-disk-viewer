@@ -18,6 +18,7 @@ function SignOutButton(props) {
 
   return (<input
     type="button"
+    className="btn btn-primary"
     onClick={handleClick}
     value="Выйти"
   />);

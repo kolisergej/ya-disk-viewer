@@ -1,0 +1,16 @@
+.list-container {
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: left;
+  width: 400px;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.empty {
+  margin-bottom: 30px;
+  text-align: center;
+}

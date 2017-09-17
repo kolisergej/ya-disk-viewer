@@ -3,30 +3,30 @@ import PropTypes from 'prop-types';
 
 import ListItem from './ListItem';
 
+import './content.css';
+
 
 function List(props) {
   const { currentId, history, items, onListItemPressed } = props;
   if (!Array.isArray(items)) {
-    return null;
+    return <div className="empty">Empty folder</div>;
   }
 
-  return (
-    <ul>
-      { items.map(
-          record => (
-            <li key={record.id}>
-              <ListItem
-                record={record}
-                currentId={currentId}
-                history={history}
-                onListItemPressed={onListItemPressed}
-              />
-            </li>
-          ),
-        )
-      }
-    </ul>
-  );
+  return (<ul className="list-group">
+    { items.map(
+        record => (
+          <li key={record.id} className="list-group-item">
+            <ListItem
+              record={record}
+              currentId={currentId}
+              history={history}
+              onListItemPressed={onListItemPressed}
+            />
+          </li>
+        ),
+      )
+    }
+  </ul>);
 }
 
 List.propTypes = {

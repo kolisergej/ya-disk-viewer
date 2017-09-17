@@ -17,6 +17,7 @@ function AuthButton(props) {
 
   return (<input
     type="button"
+    className="btn btn-primary"
     value="Authorize via Yandex.Disc"
     onClick={handleClick}
   />);

@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 function BackRef(props) {
-  return (<a href="" onClick={props.onClick}>
-    Previous level
-  </a>);
+  return (<div>
+    <a href="" onClick={props.onClick}>
+      Previous level
+    </a>
+  </div>);
 }
 
 BackRef.propTypes = {

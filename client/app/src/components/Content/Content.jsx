@@ -4,6 +4,8 @@ import Cookies from 'cookies-js';
 import List from './List';
 import BackRef from './BackRef';
 
+import './content.css';
+
 const url = 'https://cloud-api.yandex.net:443/v1/disk/resources';
 const LIMIT = 20;
 function encode(obj) {
@@ -88,14 +90,14 @@ class Content extends Component {
       const items = this.state[currentId];
       const backRef = (currentId !== root.id) ? <BackRef onClick={this.onBackRefPressed} /> : null;
       result = (
-        <div>
-          { backRef }
+        <div className="list-container">
           <List
             currentId={currentId}
             items={items}
             history={history}
             onListItemPressed={this.onListItemPressed}
           />
+          { backRef }
         </div>
       );
     }
