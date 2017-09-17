@@ -51,7 +51,7 @@ class Content extends Component {
       return;
     }
     const json = await response.json();
-    const embedded = json['_embedded'];
+    const embedded = json._embedded;
     const resourceId = json.resource_id;
     if ((embedded.total !== embedded.items.length) && (embedded.total > offset)) {
       this.extractItems(path, offset + limit, limit);
