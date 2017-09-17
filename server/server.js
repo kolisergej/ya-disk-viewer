@@ -4,18 +4,22 @@ import request from 'request';
 
 const app = express();
 app.use(cookieParser());
+app.use(express.static(`${__dirname}/../client/public`));
 app.disable('x-powered-by');
 
 const [staticUrl, devToolsHTML] = (process.env.NODE_ENV === 'production') ?
   ['', ''] : ['http://localhost:9000', '<div id="dev-tools"></div>'];
 const PORT = process.env.PORT || 3001;
+const clientId = '89c64dca5b1b46338336cec1b5279419';
+const secret = '3b7ecafa76ba46378778fd1ed107df2d';
+const yaUrl = 'https://oauth.yandex.ru';
 
 function renderHTML() {
   return `
     <!DOCTYPE html>
     <html lang="ru">
       <head>
-        <title>Test</title>
+        <title>Yandex disk viewer</title>
         <link href="${staticUrl}/styles/styles.css" rel="stylesheet">
       </head>
       <body>
@@ -32,21 +36,20 @@ function encode(obj) {
 }
 
 app.get('/auth', (req, res) => {
-  const params = {
-    response_type: 'code',
-    client_id: '89c64dca5b1b46338336cec1b5279419',
-  };
-  res.redirect(`https://oauth.yandex.ru/authorize?${encode(params)}`);
+  const params = { response_type: 'code', client_id: clientId };
+  res.redirect(`${yaUrl}/authorize?${encode(params)}`);
 });
+
 app.get('/verification_code', (req, res) => {
   const payload = {
     grant_type: 'authorization_code',
     code: req.query.code,
-    client_id: '89c64dca5b1b46338336cec1b5279419',
-    client_secret: '3b7ecafa76ba46378778fd1ed107df2d',
+    client_id: clientId,
+    client_secret: secret,
   };
+
   request.post({
-    url: 'https://oauth.yandex.ru/token',
+    url: `${yaUrl}/token`,
     formData: payload,
   }, (err, response) => {
     if (err || response.error) {
@@ -66,6 +69,7 @@ app.get('/verification_code', (req, res) => {
     res.redirect(`${req.headers.referer}?${encode(params)}`);
   });
 });
+
 app.get('/validate', (req, res) => {
   // For make redux-oauth lib happy
   res.send({
@@ -73,6 +77,7 @@ app.get('/validate', (req, res) => {
     data: {},
   });
 });
+
 app.get('/', (req, res) => {
   res.end(renderHTML());
 });
